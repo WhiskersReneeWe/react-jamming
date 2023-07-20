@@ -6,9 +6,11 @@ import './App.module.css';
 
 function App() {
     
-    const searchResults = [
+
+
+    const [searchResults, setSearchResults] = useState([
         {
-        name: 'Tiny Dancer',
+        name: 'Search Tiny Dancer',
         artist: 'Elton John',
         album: 'Madman Across The Water',
         id: 1
@@ -37,30 +39,23 @@ function App() {
             album: '1000 Forms of Fear',
             id: 5
         }
-    ];
-
+    ]);
     const [playlistName, setPlaylistName] = useState('Renee Playlist');
     const [playlistTracks, setPlaylistTracks] = useState(
         [
         
             {
-                name: 'Tiny Dancer',
-                artist: 'Elton John',
-                album: 'Madman Across The Water',
-                id: 1
-            },
-            {
-                name: 'Yello Submarine',
-                artist: 'The Beatles',
-                album: 'Revolver',
-                id: 2
-            },
-            {
-                name: 'All of me', 
-                artist: 'John Legend',
-                album: 'Love in the Future',
+                name: 'Playlist BIG Dancer',
+                artist: 'Playlist Elton John',
+                album: 'Playlist Madman Across The Water',
                 id: 3
             },
+            {
+                name: 'Playlist Yello Submarine',
+                artist: 'Playlist The Beatles',
+                album: 'Playlist Revolver',
+                id: 4
+            }
         
     ]
     );
@@ -83,7 +78,7 @@ function App() {
     
     return (
         <div>
-            <h1>My Music App</h1>
+            <h1>Relaxing Music App</h1>
 
             <SearchBar />
 
@@ -91,7 +86,7 @@ function App() {
             <SearchResults searchResults={searchResults} onAdd={addTrack} />
             <Playlist 
                 playlistName={playlistName}
-                playlist={playlistTracks} 
+                playlistTracks={playlistTracks} 
                 onNameChange={handlePlaylistNameChange} />
         </div>
 

@@ -1,24 +1,32 @@
 import React from 'react';
 import Track from '../Track/Track';
-import "../Tracklist/Tracklist.module.css";
+import "../TrackList/TrackList.module.css";
 
-function Tracklist(props) {
 
+
+
+const TrackList = (props) => {
+    
+    
+    console.log("What is the value of props.tracks?");
+    console.log(props.tracks);
 
     return (
-        <div className="Tracklist">
-            {
-            props.tracks.map((track) => {
-        return (
-          <Track
-            track={track}
-            key={track.id}
-            onAdd={props.onAdd}
-          />
-        );
-      })}
-        </div>
-    )
-}
+      <div className="TrackList">
+        {props.tracks.map((track) => {
+          return (
+            <Track
+              track={track}
+              key={track.id}
+              onAdd={props.onAdd}
+              isRemoval={props.isRemoval}
+              onRemove={props.onRemove}
+            />
+          );
+        })}
+      </div>
+    );
+  };
 
-export default Tracklist;
+
+export default TrackList;
