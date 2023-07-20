@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import SearchBar from '../SearchBar/SearchBar';
-import './App.module.css';
+import '../App/App.module.css';
 
 function App() {
     
@@ -62,6 +62,7 @@ function App() {
     
     const handlePlaylistNameChange = (event) => {
         setPlaylistName(event.target.value);
+        console.log("Debugging Name Change");
     };
 
     const addTrack = (track) => {
@@ -78,17 +79,25 @@ function App() {
     
     return (
         <div>
-            <h1>Relaxing Music App</h1>
-
-            <SearchBar />
-
-        <div className="main-content">
-            <SearchResults searchResults={searchResults} onAdd={addTrack} />
-            <Playlist 
-                playlistName={playlistName}
-                playlistTracks={playlistTracks} 
-                onNameChange={handlePlaylistNameChange} />
-        </div>
+            <h1 className="highlight">
+                 MyJammming App
+            </h1>
+            <div className="App">
+                <SearchBar />
+                <div className="App-playlist">
+                    <div className="SearchResults">
+                        <SearchResults searchResults={searchResults} onAdd={addTrack} />
+                    </div>
+                    <div className="Playlist">
+                    <Playlist 
+                        playlistName={playlistName}
+                        playlistTracks={playlistTracks} 
+                        onNameChange={handlePlaylistNameChange} 
+                        isRemoval={false}
+                        onRemove={removeTrack} />
+                    </div>
+                </div>
+            </div>
 
         </div>
     )

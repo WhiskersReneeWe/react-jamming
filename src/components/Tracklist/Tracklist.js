@@ -8,8 +8,8 @@ import "../TrackList/TrackList.module.css";
 const TrackList = (props) => {
     
     
-    console.log("What is the value of props.tracks?");
-    console.log(props.tracks);
+    // console.log("What is the value of props.tracks?");
+    // console.log(props.tracks);
 
     return (
       <div className="TrackList">

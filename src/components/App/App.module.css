@@ -10,38 +10,46 @@ html {
 
 h1 {
   padding: .77rem 0;
-  background-color: #010c3f;
+  background-color: #a41e80;
   text-align: center;
   font-family: 'Poppins', sans-serif;
   font-size: 1.88rem;
   color: #fff;
 }
 
-h1 .highlight {
-  color: #6c41ec;
-}
+/* h1 .highlight {
+  color: #35628c;
+  font-size: 2.55rem;
+} */
 
-h2 {
+/* h2 {
   font-family: 'Poppins', sans-serif;
   font-size: 1.55rem;
-}
+} */
 
-.App {
+div .App {
   height: 100%;
   padding: 0 17% 10% 17%;
+  background-color: #1e9fa4;
   background-image: url('./background.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   font-family: 'Work Sans', sans-serif;
   font-weight: 500;
-  color: #fff;
+  background-color: rgba(126, 8, 8, 0.462);
 }
 
-.App-playlist {
+div .App-playlist {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
+  background-color: #1e9fa4;
+  /* justify-content: space-between; */
+  /* width: 100%; */
+}
+
+.SearchResults, 
+.Playlist {
+  flex-basis: 50%;
 }
 
 @media only screen and (max-width: 1020px) {

@@ -3,7 +3,13 @@ import "../Track/Track.module.css";
 
 function Track(props) {
 
+    const addTrack = () => {
+        props.onAdd(props.track);
+    }
 
+    const removeTrack = () => {
+        props.onRemove(props.track);
+    }
 
     return (
         <div className="Track">
@@ -12,7 +18,7 @@ function Track(props) {
                 <p>{props.track.artist}</p>
                 <p>{props.track.album}</p>
             </div>
-            <button className="Track-action" >+</button>
+            <button className="Track-action" onClick={props.isRemoval ? removeTrack: addTrack}>{props.isRemoval ? "-": "+"}</button>
         </div>
     )
 }
