@@ -35,7 +35,7 @@ const search = async (searchTerm) => {
 
   const query = `q=${searchQuery}&type=track`;
 
-  const trackUrl = `https://api.spotify.com/v1/search?${query}&limit=8`;
+  const trackUrl = `https://api.spotify.com/v1/search?${query}&limit=5`;
   const response = await fetch(trackUrl, {
 
   method: 'GET',
