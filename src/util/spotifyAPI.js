@@ -1,8 +1,8 @@
-import fetch from 'node-fetch'; 
+// import fetch from 'node-fetch'; 
 
 
-const clientId = 'SPOTIFY_CLIENT_ID';
-const clientSecret = 'SPOTIFY_CLIENT_SECRET';
+const clientId = 'YOUR_CLIENT_ID';
+const clientSecret = 'YOUR_CLIENT_SECRET';
 
 const body = 'grant_type=client_credentials&client_id=' + clientId + '&client_secret=' + clientSecret;
 
@@ -25,7 +25,6 @@ const accessToken = async () => {
 };
 
 
-// TODO: write this into a function that returns the access token 
 // url placeholder: 'https://api.spotify.com/v1/search?q=remaster%20track:Doxy%20artist:Miles%20Davis&type=track'
 
 const search = async (searchTerm) => {
@@ -36,7 +35,7 @@ const search = async (searchTerm) => {
 
   const query = `q=${searchQuery}&type=track`;
 
-  const trackUrl = `https://api.spotify.com/v1/search?${query}&limit=5`;
+  const trackUrl = `https://api.spotify.com/v1/search?${query}&limit=8`;
   const response = await fetch(trackUrl, {
 
   method: 'GET',
@@ -62,10 +61,10 @@ const tracks = trackItems.map((track) => {
 }
 )
 
-console.log(tracks);
+return tracks;
+
 };
 
- search("Sia");
 
 export { search, accessToken}; 
 
