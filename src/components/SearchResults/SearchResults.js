@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TrackList from '../TrackList/TrackList';
-import "../SearchResults/SearchResults.module.css";
+import "../SearchResults/SearchResults.css";
 
 function SearchResults(props) {
 

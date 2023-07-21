@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import '../App/App.css';
+import React, { useState, useEffect } from 'react';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import SearchBar from '../SearchBar/SearchBar';
-import '../App/App.module.css';
+
 
 function App() {
     
@@ -48,13 +49,15 @@ function App() {
                 name: 'Playlist BIG Dancer',
                 artist: 'Playlist Elton John',
                 album: 'Playlist Madman Across The Water',
-                id: 3
+                id: 3,
+                uri: "fakeuri-3"
             },
             {
                 name: 'Playlist Yello Submarine',
                 artist: 'Playlist The Beatles',
                 album: 'Playlist Revolver',
-                id: 4
+                id: 4,
+                uri: "fakeuri-4"
             }
         
     ]
@@ -75,8 +78,12 @@ function App() {
     const removeTrack = (track) => {
         setPlaylistTracks(playlistTracks.filter(playlistTrack => playlistTrack.id !== track.id))
     };
-
     
+    const savePlaylist = () => {
+        const trackURIs = playlistTracks.map(track => track.uri);
+    }
+    
+
     return (
         <div>
             <h1 className="highlight">
@@ -94,7 +101,8 @@ function App() {
                         playlistTracks={playlistTracks} 
                         onNameChange={handlePlaylistNameChange} 
                         isRemoval={false}
-                        onRemove={removeTrack} />
+                        onRemove={removeTrack} 
+                        onSave={savePlaylist} />
                     </div>
                 </div>
             </div>

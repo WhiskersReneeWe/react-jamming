@@ -1,6 +1,6 @@
 import React from 'react';
 import TrackList from '../TrackList/TrackList';
-import "../Playlist/Playlist.module.css";
+import "../Playlist/Playlist.css";
 
 function Playlist(props) {
     
@@ -10,7 +10,7 @@ function Playlist(props) {
     return (
         <div className="Playlist">
             <input defaultValue={"Renee New Playlist"} onChange={props.onNameChange} />
-            <button className="Playlist-save">Save to Spotify</button>
+            <button className="Playlist-save" onClick={props.onSave} >Save to Spotify</button>
             <TrackList tracks={props.playlistTracks} onRemove={props.onRemove} isRemoval={true} />
         </div>
     )
