@@ -1,67 +1,46 @@
 import '../App/App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import SearchBar from '../SearchBar/SearchBar';
+import { search, createPlaylist, getUserId} from '../../util/spotifyAPI.js';
 
 
 function App() {
     
+    console.log("starting App.js debugging from App.js")
+    console.log("testing creating playlist id")
 
+    // let playlistId;
+    // playlistId = createPlaylist("Renee Playlist 1");
+    // console.log(playlistId);
+    
+    const [searchResults, setSearchResults] = useState([]);
 
-    const [searchResults, setSearchResults] = useState([
-        {
-        name: 'Search Tiny Dancer',
-        artist: 'Elton John',
-        album: 'Madman Across The Water',
-        id: 1
-        },
-        {
-            name: 'Yello Submarine',
-            artist: 'The Beatles',
-            album: 'Revolver',
-            id: 2
-        },
-        {
-            name: 'All of me', 
-            artist: 'John Legend',
-            album: 'Love in the Future',
-            id: 3
-        },
-        {
-            name: 'I will always love you',
-            artist: 'Whitney Houston',
-            album: 'The Bodyguard',
-            id: 4   
-        },
-        {
-            name: 'Cheap Thrills',
-            artist: 'Sia',
-            album: '1000 Forms of Fear',
-            id: 5
-        }
-    ]);
     const [playlistName, setPlaylistName] = useState('Renee Playlist');
     const [playlistTracks, setPlaylistTracks] = useState(
         [
         
-            {
-                name: 'Playlist BIG Dancer',
-                artist: 'Playlist Elton John',
-                album: 'Playlist Madman Across The Water',
-                id: 3,
-                uri: "fakeuri-3"
-            },
-            {
-                name: 'Playlist Yello Submarine',
-                artist: 'Playlist The Beatles',
-                album: 'Playlist Revolver',
-                id: 4,
-                uri: "fakeuri-4"
-            }
-        
     ]
     );
+    
+
+
+    const mySearch = (searchTerm) => {
+
+        async function callSearch() {
+            const newSearchResults = await search(searchTerm);
+            setSearchResults(newSearchResults);
+            console.log(newSearchResults);
+        }
+
+        console.log(`debugging searchTerm passed back from Search Bar ${searchTerm}`);
+
+        console.log("debugging aysnc callSearch")
+        callSearch();
+        
+    };
+
     
     const handlePlaylistNameChange = (event) => {
         setPlaylistName(event.target.value);
@@ -79,10 +58,16 @@ function App() {
         setPlaylistTracks(playlistTracks.filter(playlistTrack => playlistTrack.id !== track.id))
     };
     
-    const savePlaylist = () => {
+    const saveMyPlaylist = () => {
         const trackURIs = playlistTracks.map(track => track.uri);
+        console.log("Debugging savePlaylist from App.js")
+        console.log(trackURIs);
+        //savePlaylist("Renee Playlist 1", trackURIs);
     }
+
     
+    
+
 
     return (
         <div>
@@ -90,7 +75,7 @@ function App() {
                  MyJammming App
             </h1>
             <div className="App">
-                <SearchBar />
+                <SearchBar onSearch={mySearch} />
                 <div className="App-playlist">
                     <div className="SearchResults">
                         <SearchResults searchResults={searchResults} onAdd={addTrack} />
@@ -102,7 +87,7 @@ function App() {
                         onNameChange={handlePlaylistNameChange} 
                         isRemoval={false}
                         onRemove={removeTrack} 
-                        onSave={savePlaylist} />
+                        onSave={saveMyPlaylist} />
                     </div>
                 </div>
             </div>
