@@ -1,8 +1,34 @@
-// import fetch from 'node-fetch'; 
+// import Buffer from 'buffer';
+// import fetch from 'node-fetch';
 
+// TODO: Add the clientId and clientSecret to your .env file
 
-const clientId = 'YOUR_CLIENT_ID';
-const clientSecret = 'YOUR_CLIENT_SECRET';
+// const tokenBody = `grant_type=authorization_code&code=${authCode}&redirect_uri=${redicrectUri}`;
+// const tokenOptions = {
+//   method: 'POST',
+//   body: tokenBody,
+//   headers: {
+//     'Authorization': 'Basic ' + (Buffer.Buffer.from(clientId + ':' + clientSecret).toString('base64')),
+//     'Content-Type': 'application/x-www-form-urlencoded'
+//   }
+// };
+
+const userObj = {
+  display_name: 'Renee S. Liu',
+  external_urls: {
+    spotify: 'https://open.spotify.com/user/31f4bwn4r7e2y4egzwxop4bppwgq'
+  },
+  href: 'https://api.spotify.com/v1/users/31f4bwn4r7e2y4egzwxop4bppwgq',
+  id: '31f4bwn4r7e2y4egzwxop4bppwgq',
+  images: [],
+  type: 'user',
+  uri: 'spotify:user:31f4bwn4r7e2y4egzwxop4bppwgq',
+  followers: { href: null, total: 0 },
+  country: 'US',
+  product: 'free',
+  explicit_content: { filter_enabled: false, filter_locked: false },
+  email: 'reneesyliu@gmail.com'
+}
 
 const body = 'grant_type=client_credentials&client_id=' + clientId + '&client_secret=' + clientSecret;
 
@@ -65,7 +91,97 @@ return tracks;
 
 };
 
+let authToken;
 
-export { search, accessToken}; 
+const getAuthToken = async () => {
+  if (authToken) return authToken;
+
+  let authTokenMatch = window.location.href.match(/access_token=([^&]*)/);
+  let expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
+
+  if (authTokenMatch && expiresInMatch) {
+    authToken = authTokenMatch[1];
+    const expiresIn = Number(expiresInMatch[1]);
+    window.setTimeout(() => authToken = '', expiresIn * 2400);
+    window.history.pushState('Access Token', null, '/'); // This clears the parameters, allowing us to grab a new access token when it expires.
+    return authToken;
+  } else {
+    let accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redicrectUri}`;
+
+    window.location = accessUrl;
+  }
+}
+
+// const savePlaylist = (name, trackUris) => {
+//   if (!name || !trackUris.length) {
+//     return;
+//   }
+
+//   const authAccessToken = getAuthToken();
+//   const headers = { Authorization: `Bearer ${authAccessToken}` };
+
+//   // return fetch('https://api.spotify.com/v1/me', {headers: headers}
+//   // ).then(response => response.json()
+//   // ).then(jsonResponse => {
+//   //   userId = jsonResponse.id;
+//   return fetch(`https://api.spotify.com/v1/users/${mySpotifyUserId}/playlists`, {
+//       headers: headers,
+//       method: 'POST',
+//       body: JSON.stringify({name: name})
+//     }).then(response => response.json()
+//     ).then(jsonResponse => {
+//       const playlistId = jsonResponse.id;
+//       console.log(`debugging playlistId ${playlistId}`)
+//       return fetch(`https://api.spotify.com/v1/users/${mySpotifyUserId}/playlists/${playlistId}/tracks`, {
+//         headers: headers,
+//         method: 'POST',
+//         body: JSON.stringify({uris: trackUris})
+//       });
+//     });
+//   }
+
+  const createPlaylist = async (name) => {
+    const token = await getAuthToken();
+    const playlistUrl = `https://api.spotify.com/v1/users/${mySpotifyUserId}/playlists`;
+    const response = await fetch(playlistUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({name: name})
+    })
+    const data = await response.json();
+    const playlistId = data.id;
+    return playlistId;
+  };
 
 
+
+
+// const getUserId = async () => {
+
+//   const tokenResponse = await fetch(tokenUrl, tokenOptions);
+//   const tokenData = await tokenResponse.json();
+
+//   const accessToken = tokenData.access_token;
+//   console.log(`debugging auth code ${accessToken}`);
+  
+
+//   // Hit user profile API
+//   const profileUrl = 'https://api.spotify.com/v1/me';
+//   const profileResponse = await fetch(profileUrl, {
+//   headers: {
+//     Authorization: `Bearer ${accessToken}`
+//   }
+// });
+
+// const profileData = await profileResponse.json();
+// console.log(profileData);
+// return profileData.id;
+
+// };
+
+//getUserId();
+
+export { search, accessToken, createPlaylist}; 
